@@ -33,7 +33,7 @@ window.PORTFOLIO_CONFIG = {
     { category: "Frameworks",     items: ["Spring Boot", "Node.js", "React", "gRPC", "GraphQL"] },
     { category: "Cloud & DevOps", items: ["AWS", "GCP", "Kubernetes", "Terraform", "CI/CD"] },
     { category: "Databases",      items: ["PostgreSQL", "DynamoDB", "Redis", "Cassandra", "Elasticsearch"] },
-    { category: "Architecture",   items: ["Microservices", "Event-Driven", "CQRS", "REST APIs", "System Design"] },
+    { category: "Architecture",   items: ["System Design", "Architecture Patterns", "Scalable Cloud Solutions", "Microservices", "Event-Driven", "CQRS"] },
     { category: "Practices",      items: ["TDD", "Agile / Scrum", "Code Review", "Mentoring", "Documentation"] },
   ],
 
