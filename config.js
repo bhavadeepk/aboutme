@@ -32,7 +32,7 @@ window.PORTFOLIO_CONFIG = {
     { category: "Languages",      items: ["Java", "Python", "Go", "TypeScript", "SQL"] },
     { category: "Frameworks",     items: ["Spring Boot", "Node.js", "React", "gRPC", "GraphQL"] },
     { category: "Cloud & DevOps", items: ["AWS", "GCP", "Kubernetes", "Terraform", "CI/CD"] },
-    { category: "Databases",      items: ["PostgreSQL", "DynamoDB", "Redis", "Cassandra", "Elasticsearch"] },
+    { category: "Databases",      items: ["PostgreSQL", "Cosmos DB", "Kusto", "Redis", "Cassandra", "Elasticsearch"] },
     { category: "Architecture",   items: ["System Design", "Architecture Patterns", "Scalable Cloud Solutions", "Microservices", "Event-Driven", "CQRS"] },
     { category: "Practices",      items: ["TDD", "Agile / Scrum", "Code Review", "Mentoring", "Documentation"] },
   ],
