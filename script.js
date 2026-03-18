@@ -157,6 +157,47 @@
     }
     left.appendChild(social);
 
+    // Hero highlights strip — Skills · Experience · Education
+    const highlights = el("div", "hero-highlights");
+
+    // Skills: top 6 individual skill items (one per category)
+    const skillsBlock = el("div", "hero-hl-block");
+    skillsBlock.appendChild(el("span", "hero-hl-label", "⚡ Skills"));
+    const skillTags = el("div", "hero-hl-tags");
+    cfg.skills.slice(0, 6).forEach((group) => {
+      skillTags.appendChild(el("span", "hero-hl-tag hero-hl-tag--skill", group.items[0]));
+    });
+    skillsBlock.appendChild(skillTags);
+    highlights.appendChild(skillsBlock);
+
+    // Experience: company names
+    const expBlock = el("div", "hero-hl-block");
+    expBlock.appendChild(el("span", "hero-hl-label", "💼 Experience"));
+    const expTags = el("div", "hero-hl-tags");
+    cfg.experience.forEach((job) => {
+      const tag = el("div", "hero-hl-exp-item");
+      tag.appendChild(el("span", "hero-hl-exp-role", job.role));
+      tag.appendChild(el("span", "hero-hl-exp-company", `@ ${job.company}`));
+      expTags.appendChild(tag);
+    });
+    expBlock.appendChild(expTags);
+    highlights.appendChild(expBlock);
+
+    // Education: institution names + degree
+    const eduBlock = el("div", "hero-hl-block");
+    eduBlock.appendChild(el("span", "hero-hl-label", "🎓 Education"));
+    const eduTags = el("div", "hero-hl-tags");
+    cfg.education.forEach((edu) => {
+      const tag = el("div", "hero-hl-exp-item");
+      tag.appendChild(el("span", "hero-hl-exp-role", edu.degree.split("–")[0].trim()));
+      tag.appendChild(el("span", "hero-hl-exp-company", edu.institution));
+      eduTags.appendChild(tag);
+    });
+    eduBlock.appendChild(eduTags);
+    highlights.appendChild(eduBlock);
+
+    left.appendChild(highlights);
+
     // Right: Profile picture
     const right = el("div", "profile-wrapper");
     const ring  = el("div", "profile-ring");
