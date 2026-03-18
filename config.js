@@ -30,10 +30,10 @@ window.PORTFOLIO_CONFIG = {
   // ─── Top Skills ───────────────────────────────────────────────────────────
   skills: [
     { category: "Languages",      items: ["Java", "Python", "Go", "TypeScript", "SQL"] },
-    { category: "Frameworks",     items: ["Spring Boot", "Node.js", "React", "gRPC", "GraphQL"] },
-    { category: "Cloud & DevOps", items: ["AWS", "GCP", "Kubernetes", "Terraform", "CI/CD"] },
-    { category: "Databases",      items: ["PostgreSQL", "DynamoDB", "Redis", "Cassandra", "Elasticsearch"] },
-    { category: "Architecture",   items: ["Microservices", "Event-Driven", "CQRS", "REST APIs", "System Design"] },
+    { category: "Frameworks",     items: ["ASP.NET", "WPF", "Blazor", "Node.js", "Microsoft Agents Framework", "Semantic Kernel", "Bicep"] },
+    { category: "Cloud & DevOps", items: ["Function Apps", "Container Apps", "App Insights", "Storage Accounts", "Event Grid", "Service Bus", "Azure DevOps"] },
+    { category: "Databases",      items: ["PostgreSQL", "Cosmos DB", "Kusto", "Redis"] },
+    { category: "Architecture",   items: ["System Design", "Architecture Patterns", "Scalable Cloud Solutions", "Microservices", "Event-Driven", "CQRS"] },
     { category: "Practices",      items: ["TDD", "Agile / Scrum", "Code Review", "Mentoring", "Documentation"] },
   ],
 
