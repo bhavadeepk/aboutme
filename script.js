@@ -125,13 +125,13 @@
     if (cfg.resumePdf) {
       const a = el("a", "btn btn-outline", `${icons.download} Download Resume`);
       a.href = cfg.resumePdf;
-      a.setAttribute("aria-label", "Download Resume as PDF");
       const safeBaseName = (cfg.name || "resume")
         .toLowerCase()
         .trim()
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/^-+|-+$/g, "") || "resume";
-      a.download = `${safeBaseName}-resume.pdf`;
+      const downloadBaseName = safeBaseName === "resume" ? "resume" : `${safeBaseName}-resume`;
+      a.download = `${downloadBaseName}.pdf`;
       cta.appendChild(a);
     }
     if (cfg.email) {
