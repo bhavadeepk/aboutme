@@ -10,6 +10,7 @@ window.PORTFOLIO_CONFIG = {
   email: "bhavadeep.k@example.com",
   linkedin: "https://linkedin.com/in/bhavadeepk",
   github: "https://github.com/bhavadeepk",
+  resumePdf: "/Profile.pdf",
   location: "San Francisco Bay Area, CA",
   careerStartYear: 2017,
 

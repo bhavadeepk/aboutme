@@ -44,6 +44,7 @@
       C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>`,
     email: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z
       m0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>`,
+    download: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20h14v-2H5v2zm7-18v10.17l3.59-3.58L17 10l-5 5-5-5 1.41-1.41L11 12.17V2h1z"/></svg>`,
     location: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z
       m0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>`,
     cert: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>`,
@@ -119,6 +120,12 @@
     if (cfg.linkedin) {
       const a = el("a", "btn btn-primary", `${icons.linkedin} Connect on LinkedIn`);
       a.href = cfg.linkedin; a.target = "_blank"; a.rel = "noopener noreferrer";
+      cta.appendChild(a);
+    }
+    if (cfg.resumePdf) {
+      const a = el("a", "btn btn-outline", `${icons.download} Download Resume`);
+      a.href = cfg.resumePdf;
+      a.download = "";
       cta.appendChild(a);
     }
     if (cfg.email) {
