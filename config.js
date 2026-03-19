@@ -4,78 +4,124 @@
  */
 window.PORTFOLIO_CONFIG = {
   // ─── Personal Info ────────────────────────────────────────────────────────
-  name: "Bhavadeep K",
-  title: "Senior Software Development Engineer",
-  tagline: "Building scalable systems · Crafting elegant solutions · Driving engineering excellence",
-  email: "bhavadeep.k@example.com",
-  linkedin: "https://linkedin.com/in/bhavadeepk",
+  name: "Bhavadeep (Bob) Kallepalle",
+  title: "Senior Software Engineer at Microsoft",
+  tagline: "AI & Agentic App Development · Platform Engineering · Manufacturing Innovation",
+  email: "bhavadeep.k93@hotmail.com",
+  linkedin: "https://linkedin.com/in/bobkp",
   github: "https://github.com/bhavadeepk",
-  location: "San Francisco Bay Area, CA",
-  careerStartYear: 2017,
+  location: "Redmond, Washington, United States",
+  careerStartYear: 2014,
 
   // ─── Profile Picture ──────────────────────────────────────────────────────
   // Replace with a real image URL or a local path (e.g. "assets/profile.jpg")
-  profilePicture: "https://ui-avatars.com/api/?name=Bhavadeep+K&size=256&background=1e3a5f&color=ffffff&bold=true&rounded=true",
+  profilePicture: "https://ui-avatars.com/api/?name=Bhavadeep+Kallepalle&size=256&background=1e3a5f&color=ffffff&bold=true&rounded=true",
 
   // ─── About Me ─────────────────────────────────────────────────────────────
-  about: `I am a Senior Software Development Engineer with 8+ years of experience designing and
-    delivering high-throughput, distributed systems at scale. I thrive at the intersection of
-    backend architecture, cloud infrastructure, and developer experience — turning ambiguous
-    product requirements into robust, maintainable services that handle millions of requests per day.
+  about: `Experienced software engineer with 10+ years of demonstrated history working in
+    application development, platform engineering, AI and agentic app development, and IoT.
+    Currently a Senior Software Engineer at Microsoft, leading AI-driven transformation of
+    manufacturing test workflows and factory planning automation.
     <br><br>
-    I lead with empathy, mentor junior engineers, and champion engineering best-practices including
-    clean-code principles, comprehensive testing, and rigorous code review. Outside of work I
-    contribute to open-source projects and enjoy competitive programming.`,
+    Master of Science (MS) in Computer Science from California State University-Long Beach.
+    Passionate about building scalable, modular frameworks and pioneering AI architecture
+    and adaptation across manufacturing organizations — from sourcing and new product
+    introductions to manufacturing test solutions and customer diagnostics.`,
 
   // ─── Top Skills ───────────────────────────────────────────────────────────
   skills: [
-    { category: "Languages",      items: ["Java", "Python", "Go", "TypeScript", "SQL"] },
-    { category: "Frameworks",     items: ["Spring Boot", "Node.js", "React", "gRPC", "GraphQL"] },
-    { category: "Cloud & DevOps", items: ["AWS", "GCP", "Kubernetes", "Terraform", "CI/CD"] },
-    { category: "Databases",      items: ["PostgreSQL", "DynamoDB", "Redis", "Cassandra", "Elasticsearch"] },
-    { category: "Architecture",   items: ["Microservices", "Event-Driven", "CQRS", "REST APIs", "System Design"] },
-    { category: "Practices",      items: ["TDD", "Agile / Scrum", "Code Review", "Mentoring", "Documentation"] },
+    { category: "Languages",      items: ["C#", "Java", "Python"] },
+    { category: "Platforms",      items: ["Windows", "Android", ".NET / ASP.NET", "IoT", "Azure"] },
+    { category: "AI & Data",      items: ["AI Architecture", "Agentic Apps", "Digital Image Processing", "Data Analysis", "Automation"] },
+    { category: "Domains",        items: ["Manufacturing", "Telematics", "Healthcare", "Supply Chain", "Hardware Abstraction"] },
+    { category: "Engineering",    items: ["Framework Design", "Modular Architecture", "RF Testing", "REST APIs", "SDK Development"] },
+    { category: "Practices",      items: ["Agile / Scrum", "Cross-team Collaboration", "Vendor Management", "Mentoring", "JUnit Testing"] },
   ],
 
   // ─── Work Experience ──────────────────────────────────────────────────────
   experience: [
     {
-      role: "Senior Software Development Engineer",
-      company: "Acme Corp",
-      location: "San Francisco, CA",
-      period: "Jan 2022 – Present",
+      role: "Senior Software Engineer",
+      company: "Microsoft",
+      location: "Redmond, WA",
+      period: "Sep 2025 – Present",
       logo: "🏢",
       highlights: [
-        "Architected a real-time event-streaming platform processing <strong>5M+ events/day</strong> using Kafka, Flink, and DynamoDB, reducing data-pipeline latency by 60%.",
-        "Led a team of 6 engineers to re-platform a monolith into 12 independent microservices, improving deployment frequency from monthly to daily.",
-        "Designed and shipped a multi-tenant SaaS feature that added <strong>$4M ARR</strong> within the first two quarters.",
-        "Drove engineering-wide adoption of OpenTelemetry observability, cutting mean time-to-detect (MTTD) from 45 min to under 5 min.",
-        "Mentored 4 junior/mid engineers through structured 1-on-1s and design-review sessions.",
+        "Agentic transformation of Manufacturing test workflows with AI integration into diagnostics and manufacturing data analysis.",
+        "AI-driven automation of Factory planning and supply chain including materials management, capacity planning and supplier engagements.",
+        "Leading AI innovations within and outside business scope.",
       ],
     },
     {
-      role: "Software Development Engineer II",
-      company: "Tech Innovations Inc.",
-      location: "Seattle, WA",
-      period: "Jun 2019 – Dec 2021",
-      logo: "💡",
+      role: "Software Engineer 2",
+      company: "Microsoft",
+      location: "Redmond, WA",
+      period: "Sep 2021 – Sep 2025",
+      logo: "🏢",
       highlights: [
-        "Built a distributed rate-limiting service (Java + Redis) adopted by 30+ internal teams, handling 200K RPS with p99 < 2 ms.",
-        "Redesigned the checkout payment flow, decreasing error rates by 35% and improving throughput by 2×.",
-        "Owned infrastructure-as-code migration (CloudFormation → Terraform) for 15 production services.",
-        "Implemented blue-green deployment pipelines, achieving zero-downtime releases for critical services.",
+        "Product owner of a Windows service framework responsible for interacting with hardware components to perform manufacturing tests on <strong>Surface and Xbox</strong> products — dynamically loadable modules, highly configurable, exposed as an ASP.NET service.",
+        "Achieved a high level of Hardware Abstraction Layer (HAL), decoupling dependencies on hardware types and vendors.",
+        "Delivered modular and scalable <strong>RF testing solutions</strong> for Surface enabling component-level manufacturing and testing anywhere.",
+        "Pioneered AI Architecture and Adaptation for workflows across the manufacturing organization — from sourcing to customer diagnostics.",
       ],
     },
     {
       role: "Software Development Engineer",
-      company: "StartupXYZ",
-      location: "Austin, TX",
-      period: "Jul 2017 – May 2019",
-      logo: "🚀",
+      company: "Microsoft",
+      location: "Redmond, WA",
+      period: "Jun 2020 – Sep 2021",
+      logo: "🏢",
       highlights: [
-        "Developed core REST APIs (Spring Boot) serving the company's mobile app with 500K daily active users.",
-        "Introduced automated integration-test suite (JUnit + Testcontainers), raising code coverage from 40% to 82%.",
-        "Optimised slow PostgreSQL queries, reducing average API response time from 900 ms to 120 ms.",
+        "Developed and deployed a robust <strong>DHCP Server service</strong> for Windows 10, live on 100s of industrial PCs across manufacturing lines.",
+        "Integrated a new program onto the Manufacturing Test Platform as customer zero.",
+        "Delivered high-quality manufacturing test solutions for GPU, Touchpad and Sensor components.",
+      ],
+    },
+    {
+      role: "Software Development Engineer – Level 2",
+      company: "CalAmp",
+      location: "Irvine, CA",
+      period: "Jan 2020 – Jun 2020",
+      logo: "📡",
+      highlights: [
+        "Inter-team management, vendor and partner collaborations in the wireless Telematics industry.",
+        "Demonstrated problem-solving, design-oriented and result-driven approach.",
+      ],
+    },
+    {
+      role: "Android Platform Engineer",
+      company: "CalAmp",
+      location: "Carlsbad, CA",
+      period: "Feb 2018 – Jan 2020",
+      logo: "📡",
+      highlights: [
+        "End-to-end lifecycle of requirements gathering, development and maintenance of software on CalAmp Android tablets in the IoT/Telematics sector.",
+        "Created an <strong>SDK</strong> for providing vehicle data to customer apps; initiated innovative projects including dash camera support and a custom IDE extension.",
+        "Comprehensive understanding of Android internals: ADB, root, system apps, custom ROMs, HAL and logcat.",
+      ],
+    },
+    {
+      role: "Android Developer",
+      company: "ClassCalc",
+      location: "Greater Los Angeles Area",
+      period: "Jul 2017 – Jan 2018",
+      logo: "📱",
+      highlights: [
+        "Designed and developed a user-friendly Scientific and Graphing calculator interface using latest Android libraries with backward compatibility.",
+        "Coordinated between iOS and Android teams, enforcing consistency and code quality.",
+      ],
+    },
+    {
+      role: "Software Engineer",
+      company: "QuEST Global",
+      location: "Trivandrum, India",
+      period: "May 2014 – Jul 2015",
+      logo: "🌐",
+      highlights: [
+        "UI design, development and testing of Healthcare applications for Toshiba Medical Systems Corporation.",
+        "Part of an agile team responsible for maintenance and enhancement of Toshiba C-ARM X-ray systems application.",
+        "Developed 'Bug Track Assist' — a log file analyzer using multithreading, parsing and sorting algorithms.",
+        "Analyzed Toshiba's image processing algorithms in MATLAB and reimplemented them in <strong>CUDA</strong> for GPU execution.",
       ],
     },
   ],
@@ -83,35 +129,27 @@ window.PORTFOLIO_CONFIG = {
   // ─── Education ────────────────────────────────────────────────────────────
   education: [
     {
-      degree: "Master of Science – Computer Science",
-      institution: "University of Southern California",
-      location: "Los Angeles, CA",
+      degree: "Master of Science (MS) – Computer Science",
+      institution: "California State University-Long Beach",
+      location: "Long Beach, CA",
       period: "2015 – 2017",
       logo: "🎓",
       details: [
-        "Specialisation: Distributed Systems & Cloud Computing",
-        "GPA: 3.9 / 4.0",
-        "Teaching Assistant – Advanced Algorithms (CS 570)",
+        "Majored in Computer Science",
       ],
     },
     {
-      degree: "Bachelor of Technology – Computer Science & Engineering",
-      institution: "Indian Institute of Technology",
-      location: "Hyderabad, India",
-      period: "2011 – 2015",
+      degree: "Bachelor of Technology (B.Tech.) – Electrical and Electronics Engineering",
+      institution: "National Institute of Technology",
+      location: "India",
+      period: "2010 – 2014",
       logo: "🏛️",
       details: [
-        "Graduated with Distinction (Gold Medallist)",
-        "President – ACM Student Chapter",
-        "Final-year project: Fault-tolerant consensus protocol for IoT networks",
+        "Electrical and Electronics Engineering",
       ],
     },
   ],
 
   // ─── Certifications (optional) ────────────────────────────────────────────
-  certifications: [
-    { name: "AWS Certified Solutions Architect – Professional", issuer: "Amazon Web Services", year: "2023" },
-    { name: "Certified Kubernetes Administrator (CKA)",          issuer: "CNCF",               year: "2022" },
-    { name: "Google Cloud Professional Data Engineer",           issuer: "Google",              year: "2021" },
-  ],
+  certifications: [],
 };

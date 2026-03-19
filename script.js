@@ -130,8 +130,14 @@
 
     // Stats
     const stats = el("div", "hero-stats");
+    const uniqueCompanyCount = new Set(
+      cfg.experience
+        .map((job) => (job.company || "").trim().toLowerCase())
+        .filter(Boolean)
+    ).size;
+
     const statsData = [
-      { number: cfg.experience.length + "+", label: "Companies" },
+      { number: String(uniqueCompanyCount), label: "Companies" },
       { number: `${new Date().getFullYear() - cfg.careerStartYear}+`, label: "Years Exp." },
       { number: cfg.skills.reduce((a, s) => a + s.items.length, 0) + "+", label: "Technologies" },
     ];
