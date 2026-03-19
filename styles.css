@@ -135,7 +135,7 @@ strong { font-weight: 600; }
   background: rgba(13,33,55,0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  padding: 14px 0;
+  padding: 22px 0;
   border-bottom: 1px solid rgba(255,255,255,0.08);
   transition: box-shadow var(--transition);
 }
@@ -156,13 +156,14 @@ strong { font-weight: 600; }
 }
 .nav-logo span { color: var(--gold); }
 
-.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links { display: flex; gap: 40px; list-style: none; }
 .nav-links a {
   color: #cbd5e0;
   font-size: 0.875rem;
   font-weight: 500;
   letter-spacing: 0.5px;
   text-transform: uppercase;
+  padding: 6px 4px;
   transition: color var(--transition);
 }
 .nav-links a:hover,
@@ -195,7 +196,7 @@ strong { font-weight: 600; }
   margin-bottom: 14px;
 }
 .hero-name {
-  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
   font-weight: 800;
   color: #ffffff;
   letter-spacing: -2px;

@@ -30,12 +30,12 @@ window.PORTFOLIO_CONFIG = {
 
   // ─── Top Skills ───────────────────────────────────────────────────────────
   skills: [
-    { category: "Languages",      items: ["C#", "Java", "Python"] },
-    { category: "Platforms",      items: ["Windows", "Android", ".NET / ASP.NET", "IoT", "Azure"] },
-    { category: "AI & Data",      items: ["AI Architecture", "Agentic Apps", "Digital Image Processing", "Data Analysis", "Automation"] },
-    { category: "Domains",        items: ["Manufacturing", "Telematics", "Healthcare", "Supply Chain", "Hardware Abstraction"] },
-    { category: "Engineering",    items: ["Framework Design", "Modular Architecture", "RF Testing", "REST APIs", "SDK Development"] },
-    { category: "Practices",      items: ["Agile / Scrum", "Cross-team Collaboration", "Vendor Management", "Mentoring", "JUnit Testing"] },
+    { category: "Languages",      items: ["Java", "Python", "Go", "TypeScript", "SQL"] },
+    { category: "Frameworks",     items: ["ASP.NET", "WPF", "Blazor", "Node.js", "Microsoft Agents Framework", "Semantic Kernel", "Bicep"] },
+    { category: "Cloud & DevOps", items: ["Function Apps", "Container Apps", "App Insights", "Storage Accounts", "Event Grid", "Service Bus", "Azure DevOps"] },
+    { category: "Databases",      items: ["PostgreSQL", "Cosmos DB", "Kusto", "Redis"] },
+    { category: "Architecture",   items: ["System Design", "Architecture Patterns", "Scalable Cloud Solutions", "Microservices", "Event-Driven", "CQRS"] },
+    { category: "Practices",      items: ["TDD", "Agile / Scrum", "Code Review", "Mentoring", "Documentation"] },
   ],
 
   // ─── Work Experience ──────────────────────────────────────────────────────
