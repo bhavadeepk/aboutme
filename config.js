@@ -15,7 +15,7 @@ window.PORTFOLIO_CONFIG = {
 
   // ─── Profile Picture ──────────────────────────────────────────────────────
   // Replace with a real image URL or a local path (e.g. "assets/profile.jpg")
-  profilePicture: "https://ui-avatars.com/api/?name=Bhavadeep+Kallepalle&size=256&background=1e3a5f&color=ffffff&bold=true&rounded=true",
+  profilePicture: "d4cfe7ac-d013-4f8e-9c08-9a5cc7312737.jpeg",
 
   // ─── About Me ─────────────────────────────────────────────────────────────
   about: `Experienced software engineer with 10+ years of demonstrated history working in
