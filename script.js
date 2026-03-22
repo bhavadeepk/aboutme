@@ -55,6 +55,8 @@
     const nav = $("#nav");
     if (!nav) return;
 
+    const inner = el("div", "nav-inner");
+
     // Logo
     const nameParts = cfg.name.split(" ");
     const first = nameParts.slice(0, -1).join(" ");
@@ -72,8 +74,18 @@
       links.appendChild(li);
     });
 
-    nav.appendChild(logo);
-    nav.appendChild(links);
+    inner.appendChild(logo);
+    inner.appendChild(links);
+
+    // Download Resume button (top-right of nav)
+    if (cfg.resume) {
+      const a = el("a", "nav-resume-btn", `${icons.download} Resume`);
+      a.href = cfg.resume;
+      a.download = "";
+      inner.appendChild(a);
+    }
+
+    nav.appendChild(inner);
 
     // Scroll shadow + active link
     window.addEventListener("scroll", () => {
@@ -125,12 +137,6 @@
     if (cfg.email) {
       const a = el("a", "btn btn-outline", `${icons.email} ${cfg.email}`);
       a.href = `mailto:${cfg.email}`;
-      cta.appendChild(a);
-    }
-    if (cfg.resume) {
-      const a = el("a", "btn btn-outline", `${icons.download} Download Resume`);
-      a.href = cfg.resume;
-      a.download = "";
       cta.appendChild(a);
     }
     left.appendChild(cta);
