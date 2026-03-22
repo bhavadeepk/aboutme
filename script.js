@@ -47,12 +47,15 @@
     location: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z
       m0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>`,
     cert: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>`,
+    download: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>`,
   };
 
   // ── Navigation ─────────────────────────────────────────────────────────────
   function buildNav() {
     const nav = $("#nav");
     if (!nav) return;
+
+    const inner = el("div", "nav-inner");
 
     // Logo
     const nameParts = cfg.name.split(" ");
@@ -71,8 +74,18 @@
       links.appendChild(li);
     });
 
-    nav.appendChild(logo);
-    nav.appendChild(links);
+    inner.appendChild(logo);
+    inner.appendChild(links);
+
+    // Download Resume button (top-right of nav)
+    if (cfg.resume) {
+      const a = el("a", "nav-resume-btn", `${icons.download} Resume`);
+      a.href = cfg.resume;
+      a.download = "";
+      inner.appendChild(a);
+    }
+
+    nav.appendChild(inner);
 
     // Scroll shadow + active link
     window.addEventListener("scroll", () => {

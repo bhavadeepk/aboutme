@@ -169,6 +169,29 @@ strong { font-weight: 600; }
 .nav-links a:hover,
 .nav-links a.active { color: var(--gold-light); }
 
+.nav-resume-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 16px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--gold-light);
+  border: 1.5px solid rgba(245,191,36,0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all var(--transition);
+  white-space: nowrap;
+}
+.nav-resume-btn:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy);
+  transform: translateY(-1px);
+}
+.nav-resume-btn svg { width: 14px; height: 14px; fill: currentColor; }
+
 /* ── Hero ─────────────────────────────────────────────────── */
 #hero {
   background: linear-gradient(135deg, #0a1929 0%, #1e3a5f 50%, #0d2f4f 100%);
