@@ -11,6 +11,7 @@ window.PORTFOLIO_CONFIG = {
   linkedin: "https://linkedin.com/in/bobkp",
   github: "https://github.com/bhavadeepk",
   location: "Redmond, Washington, United States",
+  resume: "Profile.pdf",
   careerStartYear: 2014,
 
   // ─── Profile Picture ──────────────────────────────────────────────────────
