@@ -21,6 +21,20 @@
     return e;
   };
 
+  const THEME_KEY = "portfolio-theme";
+
+  // Apply a named theme to the document
+  function applyTheme(theme) {
+    if (theme === "default") {
+      document.documentElement.removeAttribute("data-theme");
+    } else {
+      document.documentElement.setAttribute("data-theme", theme);
+    }
+  }
+
+  // Apply saved theme immediately (avoid flash)
+  applyTheme(localStorage.getItem(THEME_KEY) || "default");
+
   // SVG icons (inline, zero-dependency)
   const icons = {
     github: `<svg viewBox="0 0 16 16" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
@@ -84,6 +98,29 @@
       a.download = "";
       inner.appendChild(a);
     }
+
+    // Theme switcher dropdown
+    const themeWrapper = el("div", "theme-switcher");
+    const themeSelect  = document.createElement("select");
+    themeSelect.id = "theme-select";
+    themeSelect.setAttribute("aria-label", "Choose theme");
+    [
+      { value: "default",   label: "🎨 Default"   },
+      { value: "newspaper", label: "📰 Newspaper"  },
+      { value: "cli",       label: "💻 CLI"        },
+    ].forEach(({ value, label }) => {
+      const opt = document.createElement("option");
+      opt.value = value;
+      opt.textContent = label;
+      themeSelect.appendChild(opt);
+    });
+    themeSelect.value = localStorage.getItem(THEME_KEY) || "default";
+    themeSelect.addEventListener("change", () => {
+      applyTheme(themeSelect.value);
+      localStorage.setItem(THEME_KEY, themeSelect.value);
+    });
+    themeWrapper.appendChild(themeSelect);
+    inner.appendChild(themeWrapper);
 
     nav.appendChild(inner);
 
