@@ -91,13 +91,11 @@
     inner.appendChild(logo);
     inner.appendChild(links);
 
-    // Download Resume button (top-right of nav)
-    if (cfg.resume) {
-      const a = el("a", "nav-resume-btn", `${icons.download} Resume`);
-      a.href = cfg.resume;
-      a.download = "";
-      inner.appendChild(a);
-    }
+    // Export page as PDF button (top-right of nav)
+    const btn = el("button", "nav-resume-btn", `${icons.download} Resume`);
+    btn.type = "button";
+    btn.addEventListener("click", () => window.print());
+    inner.appendChild(btn);
 
     // Theme switcher dropdown
     const themeWrapper = el("div", "theme-switcher");
