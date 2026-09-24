@@ -94,7 +94,13 @@
     if (typeof src !== "string") return null;
     if (/^blob:/i.test(src) || /^data:video\//i.test(src)) return src;
     if (!/^https?:\/\//i.test(src)) return null;
-    return src.replace(/["'`<>\s]/g, encodeURIComponent);
+    return src
+      .replace(/</g, "%3C")
+      .replace(/>/g, "%3E")
+      .replace(/"/g, "%22")
+      .replace(/'/g, "%27")
+      .replace(/`/g, "%60")
+      .replace(/\s/g, "%20");
   }
 
   function formatDate(dateStr) {
@@ -300,6 +306,7 @@
       if (videoObjectUrl) URL.revokeObjectURL(videoObjectUrl);
       videoFile = null;
       videoObjectUrl = null;
+      fileInput.value = "";
     }
 
     function acceptFile(file) {
@@ -332,9 +339,9 @@
     dropzone.addEventListener("dragleave", (e) => {
       if (!dropzone.contains(e.relatedTarget)) dropzone.classList.remove("is-over");
     });
-    dropzone.addEventListener("drop", () => dropzone.classList.remove("is-over"));
     dropzone.addEventListener("drop", (e) => {
       e.preventDefault();
+      dropzone.classList.remove("is-over");
       acceptFile(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]);
     });
 
