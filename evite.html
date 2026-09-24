@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Video Evite</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,400&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="evite.css" />
+</head>
+<body>
+
+  <!-- ── Guest view: shown when an evite is opened from a shared link ──────── -->
+  <main id="evite-view" class="evite-view" hidden>
+    <!-- Populated by evite.js -->
+  </main>
+
+  <!-- ── Builder view: create your evite ──────────────────────────────────── -->
+  <main id="builder" class="builder">
+    <header class="builder-header">
+      <h1>Video Evite</h1>
+      <p>Upload a video (or paste a video link), add your event details, and share it for free — no account, no server, nothing uploaded anywhere. Everything stays in your browser.</p>
+    </header>
+
+    <div class="builder-grid">
+      <!-- Form -->
+      <section class="card" aria-label="Event details">
+        <h2>1 · Your event</h2>
+
+        <label for="f-title">Event title</label>
+        <input id="f-title" type="text" maxlength="80" placeholder="Maya's 5th Birthday" />
+
+        <label for="f-host">Hosted by</label>
+        <input id="f-host" type="text" maxlength="80" placeholder="The Kallepalle Family" />
+
+        <div class="row">
+          <div>
+            <label for="f-date">Date</label>
+            <input id="f-date" type="date" />
+          </div>
+          <div>
+            <label for="f-time">Time</label>
+            <input id="f-time" type="time" />
+          </div>
+        </div>
+
+        <label for="f-location">Location</label>
+        <input id="f-location" type="text" maxlength="120" placeholder="123 Main St, Redmond, WA" />
+
+        <label for="f-message">Message</label>
+        <textarea id="f-message" rows="4" maxlength="600" placeholder="Join us for cake, games and plenty of noise!"></textarea>
+
+        <label for="f-rsvp">RSVP to (email or phone)</label>
+        <input id="f-rsvp" type="text" maxlength="120" placeholder="you@example.com" />
+
+        <label for="f-theme">Theme</label>
+        <select id="f-theme">
+          <option value="midnight">Midnight</option>
+          <option value="sunset">Sunset</option>
+          <option value="forest">Forest</option>
+          <option value="rose">Rose</option>
+        </select>
+      </section>
+
+      <!-- Video -->
+      <section class="card" aria-label="Video">
+        <h2>2 · Your video</h2>
+
+        <div class="tabs" role="tablist">
+          <button type="button" id="tab-upload" class="tab is-active" role="tab" aria-selected="true" aria-controls="panel-upload">Upload a video</button>
+          <button type="button" id="tab-link" class="tab" role="tab" aria-selected="false" aria-controls="panel-link">Use a video link</button>
+        </div>
+
+        <div id="panel-upload" class="panel" role="tabpanel" aria-labelledby="tab-upload">
+          <label for="f-file" class="dropzone" id="dropzone">
+            <span class="dropzone-icon" aria-hidden="true">🎬</span>
+            <span class="dropzone-text">Click to choose a video, or drop one here</span>
+            <span class="dropzone-hint">MP4 / WebM / MOV · keep it under ~20 MB so it stays easy to share</span>
+          </label>
+          <input id="f-file" type="file" accept="video/*" class="sr-only" />
+          <p id="file-info" class="hint" role="status"></p>
+          <p class="hint">
+            Uploaded videos never leave your device. To share one, use
+            <strong>Download evite</strong> below — you get a single HTML file with the video inside it
+            that you can text, email or drop in a chat for free.
+          </p>
+        </div>
+
+        <div id="panel-link" class="panel" hidden role="tabpanel" aria-labelledby="tab-link">
+          <label for="f-url">Video link (YouTube, Vimeo, or a direct .mp4/.webm URL)</label>
+          <input id="f-url" type="url" placeholder="https://www.youtube.com/watch?v=..." />
+          <p class="hint">A video link is the easiest way to share: it fits inside the shareable link below.</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- Share -->
+    <section class="card share-card" aria-label="Share">
+      <h2>3 · Share it</h2>
+      <div class="share-actions">
+        <button type="button" id="btn-link" class="btn btn-primary">Copy shareable link</button>
+        <button type="button" id="btn-download" class="btn">Download evite (.html)</button>
+        <button type="button" id="btn-share" class="btn" hidden>Share…</button>
+      </div>
+      <p id="share-status" class="hint" role="status" aria-live="polite"></p>
+      <input id="share-link" class="share-link" type="text" readonly hidden aria-label="Shareable link" />
+    </section>
+
+    <!-- Preview -->
+    <section class="preview-wrap" aria-label="Preview">
+      <h2 class="preview-title">Preview</h2>
+      <div id="preview" class="evite-view preview"></div>
+    </section>
+
+    <footer class="builder-footer">
+      <a href="index.html">← Back to portfolio</a>
+    </footer>
+  </main>
+
+  <script src="evite.js?v=20260924"></script>
+</body>
+</html>

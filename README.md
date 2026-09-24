@@ -58,3 +58,20 @@ A professional resume webpage.
 
 ### National Institute of Technology
 **Bachelor of Technology (B.Tech.) in Electrical and Electronics Engineering** (2010 – 2014)
+
+## Video Evite
+
+`evite.html` is a standalone, free video invitation maker — no account, no server, no cost.
+
+- **Upload a video** (MP4 / WebM / MOV) or paste a **YouTube, Vimeo or direct video link**.
+- Add title, host, date, time, location, message and RSVP contact, and pick a theme.
+- Watch a live preview as you type.
+
+Two ways to share:
+
+| Option | How it works | Best for |
+| --- | --- | --- |
+| **Copy shareable link** | Event details (and a video *link*) are encoded in the URL hash; opening it shows the evite. | Videos already hosted on YouTube/Vimeo or a direct URL. |
+| **Download evite (.html)** | Produces one self-contained HTML file with the uploaded video embedded inside it. | Videos you upload from your device — email, text or chat the file; it plays offline. |
+
+Uploaded videos are never sent anywhere — everything runs in the browser.

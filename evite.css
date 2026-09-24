@@ -1,0 +1,288 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Video Evite — standalone styles
+   Used by evite.html (builder + guest view) and inlined into downloaded evites.
+   ────────────────────────────────────────────────────────────────────────── */
+
+:root {
+  --e-bg: #0f1020;
+  --e-surface: #191b33;
+  --e-surface-2: #21243f;
+  --e-text: #eef0ff;
+  --e-muted: #a6abcd;
+  --e-accent: #7c8cff;
+  --e-accent-2: #b98cff;
+  --e-border: rgba(255, 255, 255, 0.12);
+  --e-radius: 16px;
+  --e-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+}
+
+/* Evite card themes */
+[data-evite-theme="midnight"] { --e-accent: #7c8cff; --e-accent-2: #b98cff; --e-bg: #0f1020; --e-surface: #191b33; }
+[data-evite-theme="sunset"]   { --e-accent: #ff8a5c; --e-accent-2: #ffd166; --e-bg: #1d1016; --e-surface: #2a1620; }
+[data-evite-theme="forest"]   { --e-accent: #5cd6a0; --e-accent-2: #9ae66e; --e-bg: #0c1714; --e-surface: #142420; }
+[data-evite-theme="rose"]     { --e-accent: #ff7aa8; --e-accent-2: #ffc2d6; --e-bg: #1a0f16; --e-surface: #281725; }
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--e-bg);
+  color: var(--e-text);
+  line-height: 1.6;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Builder ─────────────────────────────────────────────────────────────── */
+.builder {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3rem 1.25rem 4rem;
+}
+
+.builder-header h1 {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin: 0 0 .5rem;
+  background: linear-gradient(120deg, var(--e-accent), var(--e-accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.builder-header p { color: var(--e-muted); max-width: 62ch; margin: 0 0 2rem; }
+
+.builder-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.25rem;
+}
+
+.card {
+  background: var(--e-surface);
+  border: 1px solid var(--e-border);
+  border-radius: var(--e-radius);
+  padding: 1.5rem;
+}
+
+.card h2 {
+  margin: 0 0 1.25rem;
+  font-size: 1.05rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--e-muted);
+}
+
+label {
+  display: block;
+  margin: 1rem 0 .35rem;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--e-muted);
+}
+
+input[type="text"],
+input[type="url"],
+input[type="date"],
+input[type="time"],
+textarea,
+select {
+  width: 100%;
+  padding: .7rem .85rem;
+  background: var(--e-surface-2);
+  border: 1px solid var(--e-border);
+  border-radius: 10px;
+  color: var(--e-text);
+  font: inherit;
+  font-size: .95rem;
+}
+
+input:focus, textarea:focus, select:focus, .tab:focus-visible, .btn:focus-visible, .dropzone:focus-within {
+  outline: 2px solid var(--e-accent);
+  outline-offset: 2px;
+}
+
+textarea { resize: vertical; }
+
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+
+.hint { color: var(--e-muted); font-size: .82rem; margin: .6rem 0 0; }
+
+/* Tabs */
+.tabs { display: flex; gap: .5rem; }
+
+.tab {
+  flex: 1;
+  padding: .6rem .75rem;
+  background: var(--e-surface-2);
+  border: 1px solid var(--e-border);
+  border-radius: 10px;
+  color: var(--e-muted);
+  font: inherit;
+  font-size: .9rem;
+  cursor: pointer;
+}
+
+.tab.is-active {
+  color: var(--e-text);
+  border-color: var(--e-accent);
+  background: linear-gradient(120deg, rgba(124, 140, 255, .22), rgba(185, 140, 255, .18));
+}
+
+.panel { margin-top: 1rem; }
+
+/* Dropzone */
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .35rem;
+  padding: 2rem 1rem;
+  border: 2px dashed var(--e-border);
+  border-radius: var(--e-radius);
+  background: var(--e-surface-2);
+  text-align: center;
+  cursor: pointer;
+  margin: 0;
+}
+
+.dropzone.is-over { border-color: var(--e-accent); background: rgba(124, 140, 255, .12); }
+.dropzone-icon { font-size: 1.8rem; }
+.dropzone-text { font-weight: 600; color: var(--e-text); }
+.dropzone-hint { font-size: .8rem; color: var(--e-muted); }
+
+/* Share */
+.share-card { margin-top: 1.25rem; }
+.share-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+
+.btn {
+  padding: .7rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid var(--e-border);
+  background: var(--e-surface-2);
+  color: var(--e-text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn:hover { border-color: var(--e-accent); }
+
+.btn-primary {
+  border-color: transparent;
+  background: linear-gradient(120deg, var(--e-accent), var(--e-accent-2));
+  color: #10111f;
+}
+
+.share-link { margin-top: .85rem; font-size: .85rem; }
+
+/* Preview */
+.preview-wrap { margin-top: 2.5rem; }
+
+.preview-title {
+  font-size: 1.05rem;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--e-muted);
+  margin: 0 0 1rem;
+}
+
+.builder-footer { margin-top: 2.5rem; }
+.builder-footer a { color: var(--e-muted); text-decoration: none; font-size: .9rem; }
+.builder-footer a:hover { color: var(--e-accent); }
+
+/* ── Evite card (guest view + preview + downloaded file) ─────────────────── */
+.evite-view {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 3rem 1.25rem;
+}
+
+.evite-view.preview { padding: 0; }
+
+.evite-card {
+  background: var(--e-surface);
+  border: 1px solid var(--e-border);
+  border-radius: var(--e-radius);
+  box-shadow: var(--e-shadow);
+  overflow: hidden;
+}
+
+.evite-media { background: #000; }
+
+.evite-media video,
+.evite-media iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  background: #000;
+}
+
+.evite-body { padding: 2rem 1.75rem 2.25rem; text-align: center; }
+
+.evite-kicker {
+  font-size: .78rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--e-muted);
+  margin: 0 0 .6rem;
+}
+
+.evite-title {
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  line-height: 1.2;
+  margin: 0 0 .5rem;
+  background: linear-gradient(120deg, var(--e-accent), var(--e-accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.evite-host { color: var(--e-muted); margin: 0 0 1.5rem; }
+
+.evite-details {
+  display: grid;
+  gap: .75rem;
+  margin: 0 0 1.5rem;
+  padding: 1.1rem;
+  background: var(--e-surface-2);
+  border-radius: 12px;
+  text-align: left;
+}
+
+.evite-detail { display: flex; gap: .7rem; align-items: flex-start; }
+.evite-detail-icon { font-size: 1.05rem; line-height: 1.5; }
+.evite-detail-label { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--e-muted); display: block; }
+.evite-detail-value { font-weight: 600; overflow-wrap: anywhere; }
+
+.evite-message { color: var(--e-text); white-space: pre-wrap; margin: 0 0 1.5rem; }
+
+.evite-rsvp {
+  display: inline-block;
+  padding: .75rem 1.5rem;
+  border-radius: 999px;
+  background: linear-gradient(120deg, var(--e-accent), var(--e-accent-2));
+  color: #10111f;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.evite-empty { color: var(--e-muted); text-align: center; padding: 2rem; }
+
+.evite-footer { text-align: center; color: var(--e-muted); font-size: .8rem; margin-top: 1.25rem; }
+.evite-footer a { color: var(--e-accent); }
+
+@media (max-width: 520px) {
+  .row { grid-template-columns: 1fr; }
+}
