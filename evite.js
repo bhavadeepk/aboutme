@@ -21,7 +21,7 @@
     return node;
   };
 
-  const MAX_FILE_BYTES = 200 * 1024 * 1024; // hard stop — bigger files are unshareable
+  const MAX_FILE_BYTES = 50 * 1024 * 1024;  // hard stop — larger files break the embedded download
   const BIG_FILE_BYTES = 20 * 1024 * 1024;  // soft warning
 
   function formatBytes(bytes) {
@@ -85,6 +85,18 @@
     return null;
   }
 
+  /**
+   * Final gate for any URL that ends up in a media `src`.
+   * Only blob:, data:video/ and http(s) URLs pass, and HTML meta-characters are
+   * percent-encoded so the value stays inert when the card is serialised to HTML.
+   */
+  function safeMediaSrc(src) {
+    if (typeof src !== "string") return null;
+    if (/^blob:/i.test(src) || /^data:video\//i.test(src)) return src;
+    if (!/^https?:\/\//i.test(src)) return null;
+    return src.replace(/["'`<>\s]/g, encodeURIComponent);
+  }
+
   function formatDate(dateStr) {
     if (!dateStr) return "";
     const [y, m, d] = dateStr.split("-").map(Number);
@@ -125,11 +137,12 @@
 
     const card = el("article", "evite-card");
 
-    if (video) {
+    const mediaSrc = video ? safeMediaSrc(video.src) : null;
+    if (mediaSrc) {
       const media = el("div", "evite-media");
       if (video.kind === "iframe") {
         const frame = document.createElement("iframe");
-        frame.src = video.src;
+        frame.setAttribute("src", mediaSrc);
         frame.title = data.title ? `Video for ${data.title}` : "Invitation video";
         frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture";
         frame.referrerPolicy = "strict-origin-when-cross-origin";
@@ -137,7 +150,7 @@
         media.appendChild(frame);
       } else {
         const v = document.createElement("video");
-        v.src = video.src;
+        v.setAttribute("src", mediaSrc);
         v.controls = true;
         v.playsInline = true;
         v.preload = "metadata";
@@ -283,17 +296,27 @@
     $("#tab-link").addEventListener("click", () => setMode("link"));
 
     // File selection
+    function clearFile() {
+      if (videoObjectUrl) URL.revokeObjectURL(videoObjectUrl);
+      videoFile = null;
+      videoObjectUrl = null;
+    }
+
     function acceptFile(file) {
       if (!file) return;
       if (!file.type.startsWith("video/")) {
+        clearFile();
         fileInfo.textContent = "That file isn't a video. Please choose an MP4, WebM or MOV file.";
+        setMode("upload");
         return;
       }
       if (file.size > MAX_FILE_BYTES) {
+        clearFile();
         fileInfo.textContent = `That video is ${formatBytes(file.size)} — too large to share. Please pick one under ${formatBytes(MAX_FILE_BYTES)}.`;
+        setMode("upload");
         return;
       }
-      if (videoObjectUrl) URL.revokeObjectURL(videoObjectUrl);
+      clearFile();
       videoFile = file;
       videoObjectUrl = URL.createObjectURL(file);
       fileInfo.textContent = `${file.name} · ${formatBytes(file.size)}` +
@@ -306,9 +329,10 @@
     ["dragenter", "dragover"].forEach((evt) =>
       dropzone.addEventListener(evt, (e) => { e.preventDefault(); dropzone.classList.add("is-over"); })
     );
-    ["dragleave", "drop"].forEach((evt) =>
-      dropzone.addEventListener(evt, () => dropzone.classList.remove("is-over"))
-    );
+    dropzone.addEventListener("dragleave", (e) => {
+      if (!dropzone.contains(e.relatedTarget)) dropzone.classList.remove("is-over");
+    });
+    dropzone.addEventListener("drop", () => dropzone.classList.remove("is-over"));
     dropzone.addEventListener("drop", (e) => {
       e.preventDefault();
       acceptFile(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]);
@@ -429,8 +453,11 @@
       a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
 
+      const embedded = video && typeof video.src === "string" && video.src.startsWith("data:");
       status.textContent = `Downloaded ${a.download} (${formatBytes(blob.size)}). ` +
-        "Send that single file by email, text or chat — opening it plays the evite, no internet needed.";
+        (embedded
+          ? "Send that single file by email, text or chat — the video is inside it, so it plays without streaming."
+          : "Send that single file by email, text or chat — it needs an internet connection to play the linked video.");
     }
 
     $("#btn-download").addEventListener("click", downloadEvite);
