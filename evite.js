@@ -61,20 +61,23 @@
 
     const host = url.hostname.replace(/^www\./, "").toLowerCase();
 
-    // YouTube
-    if (host === "youtube.com" || host === "m.youtube.com" || host === "youtube-nocookie.com") {
-      const id = url.searchParams.get("v") || (url.pathname.match(/^\/(?:embed|shorts|v)\/([\w-]{6,})/) || [])[1];
-      if (id) return { kind: "iframe", src: `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}` };
+    // YouTube — ids are always [A-Za-z0-9_-]
+    const youtubeId = (raw) => (/^[\w-]{6,}$/.test(raw || "") ? raw : null);
+
+    if (host === "youtube.com" || host.endsWith(".youtube.com") || host === "youtube-nocookie.com") {
+      const id = youtubeId(url.searchParams.get("v")) ||
+                 youtubeId((url.pathname.match(/^\/(?:embed|shorts|v)\/([\w-]+)/) || [])[1]);
+      if (id) return { kind: "iframe", src: `https://www.youtube-nocookie.com/embed/${id}` };
     }
     if (host === "youtu.be") {
-      const id = url.pathname.slice(1);
-      if (id) return { kind: "iframe", src: `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}` };
+      const id = youtubeId(url.pathname.slice(1));
+      if (id) return { kind: "iframe", src: `https://www.youtube-nocookie.com/embed/${id}` };
     }
 
     // Vimeo
     if (host === "vimeo.com" || host === "player.vimeo.com") {
       const id = (url.pathname.match(/(\d{6,})/) || [])[1];
-      if (id) return { kind: "iframe", src: `https://player.vimeo.com/video/${encodeURIComponent(id)}` };
+      if (id) return { kind: "iframe", src: `https://player.vimeo.com/video/${id}` };
     }
 
     // Direct video file
@@ -94,13 +97,14 @@
     if (typeof src !== "string") return null;
     if (/^blob:/i.test(src) || /^data:video\//i.test(src)) return src;
     if (!/^https?:\/\//i.test(src)) return null;
+    // The URL parser already percent-encodes spaces, quotes and angle brackets;
+    // these replaces are a belt-and-braces guard for any value reaching an HTML attribute.
     return src
       .replace(/</g, "%3C")
       .replace(/>/g, "%3E")
       .replace(/"/g, "%22")
       .replace(/'/g, "%27")
-      .replace(/`/g, "%60")
-      .replace(/\s/g, "%20");
+      .replace(/`/g, "%60");
   }
 
   function formatDate(dateStr) {
@@ -116,6 +120,7 @@
 
   function formatTime(timeStr) {
     if (!timeStr) return "";
+    if (!/^\d{1,2}:\d{2}(:\d{2})?$/.test(timeStr)) return timeStr;
     const [h, min] = timeStr.split(":").map(Number);
     if (Number.isNaN(h) || Number.isNaN(min)) return timeStr;
     const date = new Date(2000, 0, 1, h, min);
@@ -137,9 +142,11 @@
    * All values are set through textContent / property assignment — never innerHTML —
    * so user supplied content can never inject markup.
    */
+  const THEMES = ["midnight", "sunset", "forest", "rose"];
+
   function renderEvite(container, data, video) {
     container.textContent = "";
-    container.setAttribute("data-evite-theme", data.theme || "midnight");
+    container.setAttribute("data-evite-theme", THEMES.includes(data.theme) ? data.theme : "midnight");
 
     const card = el("article", "evite-card");
 
@@ -306,7 +313,7 @@
       if (videoObjectUrl) URL.revokeObjectURL(videoObjectUrl);
       videoFile = null;
       videoObjectUrl = null;
-      fileInput.value = "";
+      fileInput.value = ""; // allow re-selecting the same file after a rejection
     }
 
     function acceptFile(file) {
@@ -323,7 +330,7 @@
         setMode("upload");
         return;
       }
-      clearFile();
+      if (videoObjectUrl) URL.revokeObjectURL(videoObjectUrl);
       videoFile = file;
       videoObjectUrl = URL.createObjectURL(file);
       fileInfo.textContent = `${file.name} · ${formatBytes(file.size)}` +
@@ -440,8 +447,17 @@
       holder.className = "evite-view";
       renderEvite(holder, data, video);
 
+      const renderedMedia = holder.querySelector(".evite-media video, .evite-media iframe");
+      if (video && !renderedMedia) {
+        status.textContent = "That video can't be embedded. Try an MP4 or WebM file, or use a video link.";
+        return;
+      }
+
       const css = await getStylesheetText();
-      const safeTitle = (data.title || "You're invited").replace(/[<>&]/g, "");
+      const safeTitle = (data.title || "You're invited")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
       const doc =
         "<!DOCTYPE html>\n" +
         '<html lang="en">\n<head>\n<meta charset="UTF-8" />\n' +
@@ -460,7 +476,8 @@
       a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
 
-      const embedded = video && typeof video.src === "string" && video.src.startsWith("data:");
+      const embedded = !!renderedMedia && renderedMedia.tagName === "VIDEO" &&
+        (renderedMedia.getAttribute("src") || "").startsWith("data:");
       status.textContent = `Downloaded ${a.download} (${formatBytes(blob.size)}). ` +
         (embedded
           ? "Send that single file by email, text or chat — the video is inside it, so it plays without streaming."
