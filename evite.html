@@ -69,12 +69,12 @@
       <section class="card" aria-label="Video">
         <h2>2 · Your video</h2>
 
-        <div class="tabs" role="tablist">
-          <button type="button" id="tab-upload" class="tab is-active" role="tab" aria-selected="true" aria-controls="panel-upload">Upload a video</button>
-          <button type="button" id="tab-link" class="tab" role="tab" aria-selected="false" aria-controls="panel-link">Use a video link</button>
+        <div class="tabs">
+          <button type="button" id="tab-upload" class="tab is-active" aria-pressed="true" aria-controls="panel-upload">Upload a video</button>
+          <button type="button" id="tab-link" class="tab" aria-pressed="false" aria-controls="panel-link">Use a video link</button>
         </div>
 
-        <div id="panel-upload" class="panel" role="tabpanel" aria-labelledby="tab-upload">
+        <div id="panel-upload" class="panel" aria-labelledby="tab-upload">
           <label for="f-file" class="dropzone" id="dropzone">
             <span class="dropzone-icon" aria-hidden="true">🎬</span>
             <span class="dropzone-text">Click to choose a video, or drop one here</span>
@@ -89,7 +89,7 @@
           </p>
         </div>
 
-        <div id="panel-link" class="panel" hidden role="tabpanel" aria-labelledby="tab-link">
+        <div id="panel-link" class="panel" hidden aria-labelledby="tab-link">
           <label for="f-url">Video link (YouTube, Vimeo, or a direct .mp4/.webm URL)</label>
           <input id="f-url" type="url" placeholder="https://www.youtube.com/watch?v=..." />
           <p class="hint">A video link is the easiest way to share: it fits inside the shareable link below.</p>

@@ -90,21 +90,17 @@
 
   /**
    * Final gate for any URL that ends up in a media `src`.
-   * Only blob:, data:video/ and http(s) URLs pass, and HTML meta-characters are
-   * percent-encoded so the value stays inert when the card is serialised to HTML.
+   * Only http(s), blob: and data:video/ URLs made purely of URL-safe characters pass;
+   * the allowlist admits no HTML meta-character, so the value can never break out of
+   * an attribute when the card is serialised into a downloadable HTML file.
    */
+  const SAFE_MEDIA_SRC = /^(?:https?:\/\/[\w.-]+(?::\d+)?(?:\/[\w\-./~%!$*+,;=:@]*)?(?:\?[\w\-./~%!$*+,;=:@&]*)?|blob:https?:\/\/[\w.-]+(?::\d+)?\/[\w-]+|data:video\/[\w.+-]+;base64,[A-Za-z0-9+/=]+)$/;
+
   function safeMediaSrc(src) {
     if (typeof src !== "string") return null;
-    if (/^blob:/i.test(src) || /^data:video\//i.test(src)) return src;
-    if (!/^https?:\/\//i.test(src)) return null;
-    // The URL parser already percent-encodes spaces, quotes and angle brackets;
-    // these replaces are a belt-and-braces guard for any value reaching an HTML attribute.
-    return src
-      .replace(/</g, "%3C")
-      .replace(/>/g, "%3E")
-      .replace(/"/g, "%22")
-      .replace(/'/g, "%27")
-      .replace(/`/g, "%60");
+    // Strict allowlist: the accepted character set cannot contain the HTML
+    // meta-characters < > " ' or backtick, so the value stays inert wherever it lands.
+    return SAFE_MEDIA_SRC.test(src) ? src : null;
   }
 
   function formatDate(dateStr) {
@@ -299,8 +295,8 @@
       const isUpload = next === "upload";
       $("#tab-upload").classList.toggle("is-active", isUpload);
       $("#tab-link").classList.toggle("is-active", !isUpload);
-      $("#tab-upload").setAttribute("aria-selected", String(isUpload));
-      $("#tab-link").setAttribute("aria-selected", String(!isUpload));
+      $("#tab-upload").setAttribute("aria-pressed", String(isUpload));
+      $("#tab-link").setAttribute("aria-pressed", String(!isUpload));
       $("#panel-upload").hidden = !isUpload;
       $("#panel-link").hidden = isUpload;
       update();
@@ -314,6 +310,7 @@
       videoFile = null;
       videoObjectUrl = null;
       fileInput.value = ""; // allow re-selecting the same file after a rejection
+      update();
     }
 
     function acceptFile(file) {
@@ -464,7 +461,9 @@
         '<meta name="viewport" content="width=device-width, initial-scale=1.0" />\n' +
         `<title>${safeTitle}</title>\n` +
         '<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet" />\n' +
-        `<style>\n${css}\n</style>\n</head>\n<body>\n${holder.outerHTML}\n</body>\n</html>\n`;
+        `<style>\n${css}\n</style>\n</head>\n` +
+        `<body data-evite-theme="${THEMES.includes(data.theme) ? data.theme : "midnight"}">\n` +
+        `${holder.outerHTML}\n</body>\n</html>\n`;
 
       const blob = new Blob([doc], { type: "text/html" });
       const url = URL.createObjectURL(blob);
