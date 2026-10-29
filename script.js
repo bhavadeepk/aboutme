@@ -79,6 +79,7 @@
 
     // Links
     const sections = ["about", "skills", "experience", "education", "certifications"];
+    if (cfg.projects && cfg.projects.length) sections.splice(3, 0, "projects");
     const links = el("ul", "nav-links");
     sections.forEach((id) => {
       const li = el("li");
@@ -89,13 +90,22 @@
     });
 
     inner.appendChild(logo);
-    inner.appendChild(links);
 
-    // Export page as PDF button (top-right of nav)
-    const btn = el("button", "nav-resume-btn", `${icons.download} Resume`);
-    btn.type = "button";
-    btn.addEventListener("click", () => window.print());
-    inner.appendChild(btn);
+    const jump = el("button", "nav-jump", "Explore");
+    jump.type = "button";
+    jump.setAttribute("aria-haspopup", "dialog");
+    jump.setAttribute("aria-controls", "work-navigator");
+    jump.setAttribute("aria-keyshortcuts", "Control+k Meta+k");
+    const shortcut = el("kbd");
+    shortcut.textContent = /Mac|iPhone|iPad/.test(navigator.platform) ? "⌘ K" : "Ctrl K";
+    jump.appendChild(shortcut);
+    inner.appendChild(jump);
+
+    const resume = el("a", "nav-resume-btn", `${icons.download} Download PDF`);
+    resume.href = cfg.resumePdf;
+    resume.download = "";
+    resume.title = "Download a plain, two-page resume (PDF)";
+    inner.appendChild(resume);
 
     // Theme switcher dropdown
     const themeWrapper = el("div", "theme-switcher");
@@ -119,8 +129,13 @@
     });
     themeWrapper.appendChild(themeSelect);
     inner.appendChild(themeWrapper);
+    inner.appendChild(links);
 
     nav.appendChild(inner);
+    const navSize = new ResizeObserver(() => {
+      document.documentElement.style.setProperty("--nav-height", `${nav.offsetHeight}px`);
+    });
+    navSize.observe(nav);
 
     // Scroll shadow + active link
     window.addEventListener("scroll", () => {
@@ -317,6 +332,7 @@
     const grid = el("div", "skills-grid");
     cfg.skills.forEach((group, i) => {
       const card = el("div", `skill-card fade-up`);
+      card.id = `skill-${i}`;
       card.style.transitionDelay = `${i * 60}ms`;
 
       card.appendChild(el("div", "skill-category", group.category));
@@ -346,6 +362,7 @@
       item.style.transitionDelay = `${i * 80}ms`;
 
       const card = el("div", "exp-card");
+      card.id = `experience-${i}`;
 
       const header = el("div", "exp-header");
       const logoAndMeta = el("div", "", "");
@@ -376,6 +393,40 @@
     section.appendChild(container);
   }
 
+  function buildProjects() {
+    const section = document.getElementById("projects");
+    if (!section) return;
+    if (!cfg.projects || !cfg.projects.length) {
+      section.hidden = true;
+      return;
+    }
+
+    const container = el("div", "container");
+    container.appendChild(el("h2", "section-title fade-up", "Selected Projects"));
+
+    const list = el("div", "projects-list");
+    cfg.projects.forEach((project, i) => {
+      const card = el("article", "exp-card project-card fade-up");
+      card.id = `project-${i}`;
+      const header = el("div", "exp-header");
+      const meta = el("div", "exp-meta");
+      meta.appendChild(el("h3", "exp-role", project.name));
+      meta.appendChild(el("p", "exp-company", project.summary));
+      if (project.event) meta.appendChild(el("p", "exp-location", project.event));
+      header.appendChild(meta);
+      if (project.year) header.appendChild(el("span", "exp-period", project.year));
+      card.appendChild(header);
+
+      const highlights = el("ul", "exp-highlights");
+      project.highlights.forEach((highlight) => highlights.appendChild(el("li", "", highlight)));
+      card.appendChild(highlights);
+      list.appendChild(card);
+    });
+
+    container.appendChild(list);
+    section.appendChild(container);
+  }
+
   // ── Education ──────────────────────────────────────────────────────────────
   function buildEducation() {
     const section = document.getElementById("education");
@@ -387,6 +438,7 @@
     const grid = el("div", "edu-grid");
     cfg.education.forEach((edu, i) => {
       const card = el("div", `edu-card fade-up`);
+      card.id = `education-${i}`;
       card.style.transitionDelay = `${i * 80}ms`;
 
       card.appendChild(el("span", "edu-logo", edu.logo || "🎓"));
@@ -415,18 +467,27 @@
     if (!section || !cfg.certifications || !cfg.certifications.length) return;
 
     const container = el("div", "container");
-    container.appendChild(el("h2", "section-title fade-up", "Certifications"));
+    container.appendChild(el("h2", "section-title fade-up", "Certifications & Patents"));
 
     const grid = el("div", "certs-grid");
     cfg.certifications.forEach((cert, i) => {
       const card = el("div", "cert-card fade-up");
+      card.id = `credential-${i}`;
       card.style.transitionDelay = `${i * 60}ms`;
-      card.appendChild(el("span", "cert-icon", "🏅"));
+      card.appendChild(el("span", "cert-icon", cert.icon || "🏅"));
 
       const info = el("div");
       info.appendChild(el("div", "cert-name",   cert.name));
       info.appendChild(el("div", "cert-issuer", cert.issuer));
       info.appendChild(el("span", "cert-year",  cert.year));
+      if (cert.description) info.appendChild(el("p", "cert-description", cert.description));
+      if (cert.url) {
+        const link = el("a", "cert-link", "View details");
+        link.href = cert.url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        info.appendChild(link);
+      }
       card.appendChild(info);
 
       grid.appendChild(card);
@@ -434,6 +495,139 @@
 
     container.appendChild(grid);
     section.appendChild(container);
+  }
+
+  function buildWorkNavigator() {
+    const trigger = $(".nav-jump");
+    if (!trigger) return;
+
+    const entries = [];
+    const add = (id, name, detail, keywords = "") => {
+      const target = document.getElementById(id);
+      if (!target || target.hidden || !target.textContent.trim()) return;
+      entries.push({ target, name, detail, search: `${name} ${detail} ${keywords}`.toLocaleLowerCase() });
+    };
+    (cfg.projects || []).forEach((project, i) =>
+      add(`project-${i}`, project.name, project.summary, project.highlights.join(" ")));
+    [
+      ["about", "About me", "Background and engineering approach"],
+      ["skills", "Top skills", "Languages, frameworks, cloud, and architecture"],
+      ["experience", "Work experience", "Roles and responsibilities"],
+      ["projects", "Selected projects", "Engineering work in focus"],
+      ["education", "Education", "Degrees and institutions"],
+      ["certifications", "Certifications & patents", "Credentials and inventions"],
+    ].forEach(([id, name, detail]) => add(id, name, detail));
+    cfg.experience.forEach((job, i) =>
+      add(`experience-${i}`, job.role, `${job.company} · ${job.period}`, job.highlights.join(" ")));
+    cfg.skills.forEach((group, i) => add(`skill-${i}`, group.category, group.items.join(", ")));
+    cfg.education.forEach((edu, i) => add(`education-${i}`, edu.degree, edu.institution));
+    (cfg.certifications || []).forEach((cert, i) =>
+      add(`credential-${i}`, cert.name, cert.issuer, cert.description || ""));
+
+    const dialog = el("dialog", "work-navigator");
+    dialog.id = "work-navigator";
+    dialog.setAttribute("aria-labelledby", "navigator-title");
+    const header = el("div", "navigator-header");
+    const title = el("h2", "", "Find your way through my work");
+    title.id = "navigator-title";
+    header.appendChild(title);
+    const close = el("button", "navigator-close", "Close");
+    close.type = "button";
+    close.addEventListener("click", () => dialog.close());
+    header.appendChild(close);
+    dialog.appendChild(header);
+
+    const label = el("label", "navigator-label", "Search projects, skills, roles, or patents");
+    label.htmlFor = "navigator-search";
+    dialog.appendChild(label);
+    const input = el("input", "navigator-search");
+    input.id = "navigator-search";
+    input.type = "search";
+    input.placeholder = "Try “routing”, “Azure”, or “Microsoft”";
+    input.autocomplete = "off";
+    input.setAttribute("aria-controls", "navigator-results");
+    dialog.appendChild(input);
+
+    const results = el("ul", "navigator-results");
+    results.id = "navigator-results";
+    dialog.appendChild(results);
+    const status = el("p", "navigator-status");
+    status.setAttribute("role", "status");
+    dialog.appendChild(status);
+
+    function render() {
+      const words = input.value.toLocaleLowerCase().trim().split(/\s+/).filter(Boolean);
+      const matches = entries.filter(entry => words.every(word => entry.search.includes(word)));
+      results.replaceChildren();
+      matches.forEach(entry => {
+        const item = el("li");
+        const link = el("a", "navigator-result");
+        link.href = `#${entry.target.id}`;
+        const name = el("span", "navigator-name");
+        name.textContent = entry.name;
+        const detail = el("span", "navigator-detail");
+        detail.textContent = entry.detail;
+        link.append(name, detail);
+        link.addEventListener("click", () => {
+          dialog.close();
+          entry.target.tabIndex = -1;
+          entry.target.classList.add("visible");
+          entry.target.querySelectorAll(".fade-up").forEach(node => node.classList.add("visible"));
+          entry.target.focus({ preventScroll: true });
+        });
+        item.appendChild(link);
+        results.appendChild(item);
+      });
+      status.textContent = matches.length
+        ? `${matches.length} destination${matches.length === 1 ? "" : "s"} · ↑ ↓ to browse · Enter to jump · Esc to close`
+        : "No matches. Try a project name, skill, or company.";
+    }
+
+    input.addEventListener("input", render);
+    dialog.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        dialog.close();
+        return;
+      }
+      if (!["ArrowDown", "ArrowUp", "Enter"].includes(event.key)) return;
+      const links = [...results.querySelectorAll("a")];
+      if (!links.length) return;
+      if (event.key === "Enter") {
+        if (document.activeElement === input) {
+          event.preventDefault();
+          links[0].click();
+        }
+        return;
+      }
+      if (document.activeElement !== input && !links.includes(document.activeElement)) return;
+      event.preventDefault();
+      const current = links.indexOf(document.activeElement);
+      if (event.key === "ArrowUp" && current === 0) {
+        input.focus();
+      } else {
+        const index = event.key === "ArrowDown" ? (current + 1) % links.length
+          : current < 0 ? links.length - 1 : current - 1;
+        links[index].focus();
+      }
+    });
+    dialog.addEventListener("click", event => {
+      if (event.target === dialog) dialog.close();
+    });
+    function open() {
+      input.value = "";
+      render();
+      dialog.showModal();
+      input.focus();
+    }
+    trigger.addEventListener("click", open);
+    document.addEventListener("keydown", event => {
+      if (event.key.toLowerCase() !== "k" || !(event.ctrlKey || event.metaKey) || event.altKey || event.repeat) return;
+      event.preventDefault();
+      if (dialog.open) dialog.close();
+      else open();
+    });
+    document.body.appendChild(dialog);
   }
 
   // ── Footer ─────────────────────────────────────────────────────────────────
@@ -507,9 +701,11 @@
     buildAbout();
     buildSkills();
     buildExperience();
+    buildProjects();
     buildEducation();
     buildCertifications();
     buildFooter();
+    buildWorkNavigator();
     initScrollAnimations();
   }
 

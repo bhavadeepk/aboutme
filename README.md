@@ -2,10 +2,22 @@
 
 A professional resume webpage.
 
+Use **Explore** in the navigation (or **Ctrl+K / Cmd+K**) to search projects, roles,
+skills, education, and patents. Use the arrow keys to browse results, Enter to jump,
+and Escape to close. The navigator follows the selected theme and reduced-motion preferences.
+
+**Download PDF** downloads `Bob-Kallepalle-Resume.pdf`, a plain, two-page resume
+with selectable text and contact/patent links. It does not print the webpage or
+include its navigation, theme controls, or profile picture. The PDF is a curated
+document: replace that file when updating the downloadable resume. Its path is
+configured by `resumePdf` in `config.js`.
+
 ## Experience
 
 ### Microsoft
 **Senior Software Engineer** (Sep 2025 – Present) · Redmond, WA  
+- Leading an engineering team responsible for sourcing infrastructure critical to budget planning and cost of goods calculations.
+- Owning the technical direction and delivery of sourcing infrastructure that underpins financial planning and product costing.
 - Leading the agentic transformation of manufacturing test workflows by integrating AI into diagnostics and large-scale manufacturing data analysis.  
 - Driving AI-powered factory planning and supply chain automation across materials management, capacity planning, and supplier engagement.  
 - Championing strategic AI innovation initiatives across both core and adjacent business areas.
@@ -51,6 +63,29 @@ A professional resume webpage.
 - Analyzed image processing algorithms in MATLAB and reimplemented them in CUDA to enable GPU-accelerated performance.  
 - Contributed actively to communication and culture initiatives, including the organizing committee for the “Embrace QuEST” rebranding program.
 
+## Selected Projects
+
+### Hydra Edge — Privacy-Aware Local Model Routing for VS Code
+**MAIDAP × OCTO Summer Hackathon, Microsoft | 2026**
+
+- Co-built a VS Code routing layer that classifies every AI request and transparently routes sensitive prompts to on-device local models instead of cloud endpoints, preserving developer productivity without leaking secrets.
+- Designed and delivered the security tag scanning pipeline: Gitleaks-style rule matching plus entropy analysis for secret detection, regex and Luhn validation for PII, and path-heuristic / diff-hunk pattern analysis for sensitive source code — emitting classification tags that drive the routing decision.
+- Owned the VS Code integration end to end — wired the privacy filter into the request path, added referenced-file and active-editor content to model context, and integrated the routing interfaces into the hackathon VS Code fork.
+- Authored the architecture and software design artifacts for the routing solution, aligning the privacy, routing, and extension workstreams.
+- Recognized by engineering leadership; the project placed within one point of the winning entry and is being ported for Surface RTX Spark by the Windows + Devices organization.
+
+### Agent Workflow Engine — Visual Editing & Observable Multi-Model Workflows
+
+**2026**
+
+- Co-built an agent workflow engine for defining and running reusable, multi-step AI workflows.
+- Developed a visual workflow editor with flowchart views, step creation and deletion, configuration editing, and workflow validation, saving, and loading.
+- Connected workflow execution to live step status, failure diagnostics, and per-step usage and timing telemetry, making long-running agent workflows observable.
+- Authored multi-model workflows that separate implementation, critique, and repair, with explicit execution budgets and verification gates.
+- Compared model configurations through reproducible runs, documenting completion, correctness, cost, and runtime tradeoffs; used the findings to improve failure reporting and Windows reliability.
+
+Project entries are configured in `config.js` and rendered in the Selected Projects section.
+
 ## Education
 
 ### California State University, Long Beach
@@ -58,3 +93,11 @@ A professional resume webpage.
 
 ### National Institute of Technology
 **Bachelor of Technology (B.Tech.) in Electrical and Electronics Engineering** (2010 – 2014)
+
+## Certifications & Patents
+
+### Technologies for driver behavior assessment
+
+**Co-inventor · CalAmp Corp | Published August 26, 2021**
+
+Patent application publication [WO2021168387A1 (WIPO/PCT)](https://patents.google.com/patent/WO2021168387A1/de). Combines vehicle sensor data and event-triggered video capture to assess driver behavior.
